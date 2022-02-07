@@ -2,7 +2,5 @@
 
 public abstract class Entity
 {
-    protected Entity() => Id = Guid.NewGuid();
-
-    public Guid Id { get; }
+    public string Id { get; } = Guid.NewGuid().ToString();
 }

@@ -18,7 +18,7 @@ public class CustomerController : ControllerBase
     }
 
     [HttpPost]
-    public void Post(string firstName, string lastName, string emailAddress)
+    public string Post(string firstName, string lastName, string emailAddress)
     {
         Name name = new Name(firstName, lastName);
         Email email = new Email(emailAddress);
@@ -28,5 +28,7 @@ public class CustomerController : ControllerBase
         using IDocumentSession session = _store.OpenSession();
         session.Store(customer);
         session.SaveChanges();
+
+        return customer.Id;
     }
 }

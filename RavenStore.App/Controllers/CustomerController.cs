@@ -1,5 +1,4 @@
-﻿using System.Diagnostics.Tracing;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Raven.Client.Documents;
 using Raven.Client.Documents.Session;
 using RavenStore.Core.Entities;

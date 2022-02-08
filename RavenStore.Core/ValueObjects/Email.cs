@@ -10,4 +10,9 @@ public class Email : ValueObject
     public string Address { get; }
 
     public override string ToString() => Address.ToLower();
+
+    protected override IEnumerable<object> GetEqualityComponents()
+    {
+        yield return Address.ToLower(); // case-insensitive comparison of email addresses
+    }
 }

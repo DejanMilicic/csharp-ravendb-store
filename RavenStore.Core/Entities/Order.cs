@@ -4,13 +4,13 @@ public class Order : Entity
 {
     private readonly IList<OrderLine> _items;
 
-    public Order(Customer customer)
+    public Order(string customerId)
     {
-        Customer = customer;
+        CustomerId = customerId;
         _items = new List<OrderLine>();
     }
 
-    public Customer Customer { get; }
+    public string CustomerId { get; }
     public IReadOnlyCollection<OrderLine> Items => _items.ToArray();
     public decimal Discount { get; private set; } = 0;
     public decimal Total => (_items.Sum(x => x.Total) - Discount);

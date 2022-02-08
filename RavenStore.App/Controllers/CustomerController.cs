@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Diagnostics.Tracing;
+using Microsoft.AspNetCore.Mvc;
 using Raven.Client.Documents;
 using Raven.Client.Documents.Session;
 using RavenStore.Core.Entities;
+using RavenStore.Core.ValueObjects;
 
 namespace RavenStore.App.Controllers;
 
@@ -17,12 +19,15 @@ public class CustomerController : ControllerBase
     }
 
     [HttpPost]
-    public void Post(Customer customer)
+    public void Post(string firstName, string lastName, string emailAddress)
     {
-        using IDocumentSession session = _store.OpenSession();
+        Name name = new Name(firstName, lastName);
+        Email email = new Email(emailAddress);
 
+        Customer customer = new Customer(name, email);
+        
+        using IDocumentSession session = _store.OpenSession();
         session.Store(customer);
         session.SaveChanges();
     }
 }
-

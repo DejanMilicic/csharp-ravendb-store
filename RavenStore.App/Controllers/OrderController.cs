@@ -2,6 +2,7 @@
 using Raven.Client.Documents;
 using Raven.Client.Documents.Session;
 using RavenStore.Core.Entities;
+using RavenStore.Core.ValueObjects;
 
 namespace RavenStore.App.Controllers;
 
@@ -29,5 +30,22 @@ public class OrderController : ControllerBase
         session.SaveChanges();
 
         return order.Id;
+    }
+
+    [HttpPost("/AddProduct")]
+    public void AddProduct(string orderId, string productId, int quantity)
+    {
+        using IDocumentSession session = _store.OpenSession();
+
+        Order order = session.Load<Order>(orderId);
+        if (order == null) throw new Exception("Invalid order id");
+
+        Product product = session.Load<Product>(productId);
+        if (product == null) throw new Exception("Invalid product id");
+
+        OrderLine line = new OrderLine(product.Id, quantity, product.Price);
+        order.Add(line);
+        
+        session.SaveChanges();
     }
 }

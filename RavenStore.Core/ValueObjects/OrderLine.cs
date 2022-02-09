@@ -22,4 +22,11 @@ public class OrderLine : ValueObject
         yield return ProductId;
         yield return Price;
     }
+
+    public OrderLine Add(OrderLine other)
+    {
+        if (this != other) throw new Exception("Cannot add order lines with different products");
+
+        return new OrderLine(this.ProductId, this.Quantity + other.Quantity, this.Price);
+    }
 }

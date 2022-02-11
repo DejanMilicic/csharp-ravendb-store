@@ -4,7 +4,11 @@ public class Email : ValueObject
 {
     public Email(string address)
     {
-        Address = address.ToLower();
+        // validation
+        if (String.IsNullOrWhiteSpace(address)) throw new Exception("invalid email address");
+        if (!address.Contains('@')) throw new Exception("invalid email address");
+
+        Address = address;
     }
 
     public string Address { get; }

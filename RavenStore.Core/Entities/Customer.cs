@@ -11,5 +11,6 @@ public class Customer : Entity
     }
 
     public Name Name { get; }
+
     public Email Email { get; }
 }

@@ -17,6 +17,21 @@ public class OrderController : ControllerBase
         _store = store;
     }
 
+    [HttpGet]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Order))]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public IActionResult Get(string orderId)
+    {
+        using IDocumentSession session = _store.OpenSession();
+
+        Order order = session.Load<Order>(orderId);
+
+        if (order == null)
+            return NotFound();
+        else
+            return Ok(order);
+    }
+
     [HttpPost]
     public string Post(string customerId)
     {
